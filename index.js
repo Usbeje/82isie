@@ -174,3 +174,4 @@ launch()
 process.on("uncaughtException", e => {
   console.error(e)
 })
+export { Exp }
