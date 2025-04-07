@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WhatsApp Bot - Frontend</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; padding: 30px; }
+    input, textarea, button { padding: 10px; margin: 10px 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Kirim Pesan ke WhatsApp</h2>
+  <form id="sendForm">
+    <input type="text" id="number" placeholder="Nomor WhatsApp (628xxxxx)" required />
+    <textarea id="message" placeholder="Ketik pesan di sini..." required></textarea>
+    <button type="submit">Kirim</button>
+  </form>
+  <p id="response"></p>
+
+  <script>
+    const form = document.getElementById('sendForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const number = document.getElementById('number').value;
+      const message = document.getElementById('message').value;
+
+      const res = await fetch('/send-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ number, message })
+      });
+
+      const data = await res.json();
+      document.getElementById('response').textContent = data.message;
+    });
+  </script>
+</body>
+</html>
+
